@@ -47,14 +47,14 @@ AIERP 是一个基于 Vue 3 + Element Plus + Node.js + Express + MySQL 开发的
 ### 2. 安装前端依赖
 
 ```bash
-cd frontend
+cd client
 npm install
 ```
 
 ### 3. 安装后端依赖
 
 ```bash
-cd ../backend
+cd ../server
 npm install
 ```
 
@@ -64,7 +64,7 @@ npm install
 
 ### 后端配置
 
-后端配置文件位于 `backend/src/config/` 目录下。
+后端配置文件位于 `server/src/config/` 目录下。
 
 #### 数据库配置 (database.js)
 
@@ -86,7 +86,7 @@ const config = {
 
 #### Redis 配置
 
-在 `backend/src/config/database.js` 中配置 Redis 连接：
+在 `server/src/config/database.js` 中配置 Redis 连接：
 
 ```javascript
 const redisConfig = {
@@ -110,7 +110,7 @@ const corsOptions = {
 
 ### 前端配置
 
-前端 API 配置位于 `frontend/src/utils/axios.js`：
+前端 API 配置位于 `client/src/utils/axios.js`：
 
 ```javascript
 // 修改 API 基础地址
@@ -126,7 +126,7 @@ const baseURL = 'http://localhost:3000/api';
 首次运行前需要初始化数据库：
 
 ```bash
-cd backend
+cd server
 npm run init-db
 ```
 
@@ -138,7 +138,7 @@ npm run init-db
 ### 2. 启动后端服务
 
 ```bash
-cd backend
+cd server
 # 开发模式（支持热重载）
 npm run dev
 
@@ -153,7 +153,7 @@ npm run start
 打开新的终端窗口：
 
 ```bash
-cd frontend
+cd client
 npm run dev
 ```
 
@@ -164,11 +164,11 @@ npm run dev
 如果需要部署到生产环境：
 
 ```bash
-cd frontend
+cd client
 npm run build
 ```
 
-构建产物将输出到 `frontend/dist/` 目录。
+构建产物将输出到 `client/dist/` 目录。
 
 ---
 
@@ -233,12 +233,12 @@ A: 检查：
 
 A: 修改端口配置：
 
-**后端**: 在 `backend/src/index.js` 中修改
+**后端**: 在 `server/src/index.js` 中修改
 ```javascript
 const PORT = process.env.PORT || 3000;
 ```
 
-**前端**: 在 `frontend/vite.config.js` 中修改
+**前端**: 在 `client/vite.config.js` 中修改
 ```javascript
 server: {
   port: 5173,
@@ -251,7 +251,7 @@ server: {
 
 ```
 AIERP项目/
-├── backend/              # 后端代码
+├── server/              # 后端代码
 │   ├── src/
 │   │   ├── config/      # 配置文件
 │   │   ├── middleware/  # 中间件
@@ -261,7 +261,7 @@ AIERP项目/
 │   │   ├── utils/       # 工具函数
 │   │   └── index.js     # 入口文件
 │   └── package.json
-├── frontend/            # 前端代码
+├── client/            # 前端代码
 │   ├── src/
 │   │   ├── api/         # API 接口
 │   │   ├── components/  # 组件
