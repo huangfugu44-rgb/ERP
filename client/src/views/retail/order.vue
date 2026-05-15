@@ -1,0 +1,85 @@
+﻿<template>
+  <div class="retail-order-page">
+    <el-card>
+      <div slot="header">
+        <span>零售单管理</span>
+        <el-button type="primary" size="small" style="float: right">新增零售单</el-button>
+      </div>
+      <data-table
+        :data="orderList"
+        :loading="loading"
+        :total="total"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        @current-change="handlePageChange"
+      >
+        <el-table-column type="index" label="序号" width="60"></el-table-column>
+        <el-table-column prop="orderNo" label="单据编号" width="180"></el-table-column>
+        <el-table-column prop="memberName" label="会员名称" width="120"></el-table-column>
+        <el-table-column prop="totalAmount" label="总金额" width="120"></el-table-column>
+        <el-table-column prop="discountAmount" label="优惠金额" width="100"></el-table-column>
+        <el-table-column prop="actualAmount" label="实收金额" width="120"></el-table-column>
+        <el-table-column prop="paymentMethod" label="支付方式" width="100"></el-table-column>
+        <el-table-column prop="status" label="状态" width="80"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" width="180"></el-table-column>
+        <el-table-column label="操作" width="150" fixed="right">
+          <template slot-scope="scope">
+            <el-button link size="small">查看</el-button>
+            <el-button link size="small">退款</el-button>
+          </template>
+        </el-table-column>
+      </data-table>
+    </el-card>
+  </div>
+</template>
+
+<script>
+import { DataTable } from '@/components/common';
+import { getRetailOrders } from '@/api/retail';
+
+export default {
+  name: 'RetailOrder',
+  components: {
+    DataTable,
+  },
+  data() {
+    return {
+      loading: false,
+      orderList: [],
+      total: 0,
+      currentPage: 1,
+      pageSize: 10,
+    };
+  },
+  mounted() {
+    this.loadOrders();
+  },
+  methods: {
+    async loadOrders() {
+      this.loading = true;
+      try {
+        const res = await getRetailOrders({
+          page: this.currentPage,
+          pageSize: this.pageSize,
+        });
+        this.orderList = res.data.list || [];
+        this.total = res.data.total || 0;
+      } catch (error) {
+        console.error('加载订单失败:', error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    handlePageChange(page) {
+      this.currentPage = page;
+      this.loadOrders();
+    },
+  },
+};
+</script>
+
+<style scoped>
+.retail-order-page {
+  padding: 20px;
+}
+</style>
